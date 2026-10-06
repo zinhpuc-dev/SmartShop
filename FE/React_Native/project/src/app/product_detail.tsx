@@ -27,37 +27,35 @@ function HoverButton({ children, style, hoverStyle, ...props }: any) {
             onHoverOut={() => setHovered(false)}
             style={[style, hovered ? hoverStyle : style]}
         >
-            {typeof children === "function" ? children(hovered) : children}
+            {typeof children === "function"
+                ? children(hovered)
+                : children}
         </Pressable>
     );
 }
 
+/* ================================================= */
+/*                     APP                           */
+/* ================================================= */
+
 export default function ProductDetail() {
-    // ==============================
-    // ROUTER
-    // ==============================
-
     const router = useRouter();
-
-    // ==============================
-    // RESPONSIVE
-    // ==============================
 
     const { width } = useWindowDimensions();
 
     const isMobile = width < 600;
 
-    // ==============================
-    // STATE
-    // ==============================
+    /* ================================================= */
+    /*                     STATE                         */
+    /* ================================================= */
 
     const [selectedColor, setSelectedColor] = useState(1);
     const [selectedCapacity, setSelectedCapacity] = useState(1);
     const [selectedImage, setSelectedImage] = useState(0);
 
-    // ==============================
-    // DANH SÁCH ẢNH
-    // ==============================
+    /* ================================================= */
+    /*                 DANH SÁCH ẢNH                     */
+    /* ================================================= */
 
     const productImages = [
         require("../../image/16e1.jpg"),
@@ -67,9 +65,9 @@ export default function ProductDetail() {
         require("../../image/16e5.png"),
     ];
 
-    // ==============================
-    // THÔNG TIN MÀU
-    // ==============================
+    /* ================================================= */
+    /*                  THÔNG TIN MÀU                    */
+    /* ================================================= */
 
     const colors = [
         {
@@ -94,9 +92,9 @@ export default function ProductDetail() {
         },
     ];
 
-    // ==============================
-    // THÔNG TIN DUNG LƯỢNG
-    // ==============================
+    /* ================================================= */
+    /*               THÔNG TIN DUNG LƯỢNG               */
+    /* ================================================= */
 
     const capacities = [
         {
@@ -109,9 +107,9 @@ export default function ProductDetail() {
         },
     ];
 
-    // ==============================
-    // HEADER BUTTON
-    // ==============================
+    /* ================================================= */
+    /*                HEADER BUTTON                     */
+    /* ================================================= */
 
     function HeaderButton({
         icon,
@@ -124,7 +122,8 @@ export default function ProductDetail() {
             <HoverButton
                 style={[
                     styles.headerButtonContainer,
-                    isMobile && styles.headerButtonContainerMobile,
+                    isMobile &&
+                        styles.headerButtonContainerMobile,
                 ]}
                 hoverStyle={styles.headerButtonContainerHover}
             >
@@ -133,21 +132,28 @@ export default function ProductDetail() {
                         <View
                             style={[
                                 styles.headerButton,
-                                isMobile && styles.headerButtonMobile,
-                                hovered && styles.headerButtonHover,
+                                isMobile &&
+                                    styles.headerButtonMobile,
+                                hovered &&
+                                    styles.headerButtonHover,
                             ]}
                         >
                             <FontAwesome6
                                 name={icon as any}
                                 size={isMobile ? 18 : 22}
-                                color={hovered ? "red" : "#ffffff"}
+                                color={
+                                    hovered
+                                        ? "red"
+                                        : "#ffffff"
+                                }
                             />
                         </View>
 
                         <Text
                             style={[
                                 styles.headerButtonText,
-                                isMobile && styles.headerButtonTextMobile,
+                                isMobile &&
+                                    styles.headerButtonTextMobile,
                             ]}
                         >
                             {text}
@@ -158,15 +164,15 @@ export default function ProductDetail() {
         );
     }
 
-    // ==============================
-    // RENDER
-    // ==============================
+    /* ================================================= */
+    /*                    RENDER                         */
+    /* ================================================= */
 
     return (
         <View style={styles.container}>
 
             {/* ================================================= */}
-            {/* HEADER - KHÔNG CUỘN THEO NỘI DUNG                */}
+            {/*                       HEADER                      */}
             {/* ================================================= */}
 
             <View
@@ -176,9 +182,9 @@ export default function ProductDetail() {
                 ]}
             >
 
-                {/* ============================== */}
-                {/* LOGO */}
-                {/* ============================== */}
+                {/* ================================================= */}
+                {/*                        LOGO                       */}
+                {/* ================================================= */}
 
                 <Pressable
                     onPress={() => router.push("/")}
@@ -191,73 +197,85 @@ export default function ProductDetail() {
                         source={require("../../image/logo.jpg")}
                         style={[
                             styles.logoImage,
-                            isMobile && styles.logoImageMobile,
+                            isMobile &&
+                                styles.logoImageMobile,
                         ]}
                     />
 
                     <Text
                         style={[
                             styles.logoText,
-                            isMobile && styles.logoTextMobile,
+                            isMobile &&
+                                styles.logoTextMobile,
                         ]}
                     >
                         BVP Shop
                     </Text>
                 </Pressable>
 
-                {/* ============================== */}
-                {/* SEARCH */}
-                {/* ============================== */}
+                {/* ================================================= */}
+                {/*                      SEARCH                       */}
+                {/* ================================================= */}
 
                 <View
                     style={[
                         styles.searchBar,
-                        isMobile && styles.searchBarMobile,
+                        isMobile &&
+                            styles.searchBarMobile,
                     ]}
                 >
                     <TextInput
                         placeholder="Tìm kiếm sản phẩm"
-                        placeholderTextColor="#777"
+                        placeholderTextColor="#888"
                         style={[
                             styles.searchInput,
-                            isMobile && styles.searchInputMobile,
+                            isMobile &&
+                                styles.searchInputMobile,
                         ]}
                     />
 
-                    <Pressable
-                        style={({ pressed }: { pressed: boolean }) => [
+                    <HoverButton
+                        style={[
                             styles.searchButton,
-                            isMobile && styles.searchButtonMobile,
-                            pressed && styles.searchButtonPressed,
+                            isMobile &&
+                                styles.searchButtonMobile,
                         ]}
+                        hoverStyle={styles.buttonHover}
                     >
                         <FontAwesome6
                             name="magnifying-glass"
                             size={isMobile ? 16 : 18}
-                            color="white"
+                            color="#ffffff"
                         />
-                    </Pressable>
+                    </HoverButton>
                 </View>
 
-                {/* ============================== */}
-                {/* CUSTOMER ICONS */}
-                {/* ============================== */}
+                {/* ================================================= */}
+                {/*                  CUSTOMER ICONS                    */}
+                {/* ================================================= */}
 
                 <View
                     style={[
                         styles.customerIcons,
-                        isMobile && styles.customerIconsMobile,
+                        isMobile &&
+                            styles.customerIconsMobile,
                     ]}
                 >
+                    {/* Giỏ hàng */}
+
                     <HeaderButton
                         icon="cart-shopping"
                         text="Giỏ hàng"
                     />
 
+                    {/* Đơn hàng */}
+
                     <HeaderButton
                         icon="box"
                         text="Đơn hàng"
                     />
+
+                    {/* Tài khoản */}
 
                     <HeaderButton
                         icon="user"
@@ -267,145 +285,155 @@ export default function ProductDetail() {
             </View>
 
             {/* ================================================= */}
-            {/* MAIN - CHỈ PHẦN NÀY ĐƯỢC SCROLL                  */}
+            {/*                MAIN - SCROLL                       */}
             {/* ================================================= */}
 
             <ScrollView
                 style={styles.contentScroll}
                 contentContainerStyle={[
                     styles.scrollContent,
-                    isMobile && styles.scrollContentMobile,
+                    isMobile &&
+                        styles.scrollContentMobile,
                 ]}
                 showsVerticalScrollIndicator={false}
             >
 
                 {/* ================================================= */}
-                {/* PRODUCT DETAIL                                    */}
+                {/*                  PRODUCT DETAIL                  */}
                 {/* ================================================= */}
 
                 <View
                     style={[
                         styles.productDetail,
-                        isMobile && styles.productDetailMobile,
+                        isMobile &&
+                            styles.productDetailMobile,
                     ]}
                 >
 
                     {/* ================================================= */}
-                    {/* PRODUCT IMAGES                                    */}
+                    {/*                  PRODUCT IMAGES                  */}
                     {/* ================================================= */}
 
                     <View
                         style={[
                             styles.productImages,
-                            isMobile && styles.productImagesMobile,
+                            isMobile &&
+                                styles.productImagesMobile,
                         ]}
                     >
 
-                        {/* ============================== */}
                         {/* ẢNH LỚN */}
-                        {/* ============================== */}
 
                         <View
                             style={[
                                 styles.mainImage,
-                                isMobile && styles.mainImageMobile,
+                                isMobile &&
+                                    styles.mainImageMobile,
                             ]}
                         >
                             <Image
-                                source={productImages[selectedImage]}
+                                source={
+                                    productImages[
+                                        selectedImage
+                                    ]
+                                }
                                 style={[
                                     styles.mainProductImage,
-                                    isMobile && styles.mainProductImageMobile,
+                                    isMobile &&
+                                        styles.mainProductImageMobile,
                                 ]}
                             />
                         </View>
 
-                        {/* ============================== */}
                         {/* THUMBNAIL */}
-                        {/* ============================== */}
 
                         <View
                             style={[
                                 styles.thumbnailList,
-                                isMobile && styles.thumbnailListMobile,
+                                isMobile &&
+                                    styles.thumbnailListMobile,
                             ]}
                         >
-                            {productImages.map((image, index) => (
-                                <Pressable
-                                    key={index}
-                                    onPress={() => setSelectedImage(index)}
-                                    style={[
-                                        styles.thumbnail,
-                                        isMobile && styles.thumbnailMobile,
-                                        selectedImage === index &&
-                                        styles.thumbnailActive,
-                                    ]}
-                                >
-                                    <Image
-                                        source={image}
-                                        style={styles.thumbnailImage}
-                                    />
-                                </Pressable>
-                            ))}
+                            {productImages.map(
+                                (image, index) => (
+                                    <Pressable
+                                        key={index}
+                                        onPress={() =>
+                                            setSelectedImage(
+                                                index
+                                            )
+                                        }
+                                        style={[
+                                            styles.thumbnail,
+                                            isMobile &&
+                                                styles.thumbnailMobile,
+                                            selectedImage ===
+                                                index &&
+                                                styles.thumbnailActive,
+                                        ]}
+                                    >
+                                        <Image
+                                            source={image}
+                                            style={
+                                                styles.thumbnailImage
+                                            }
+                                        />
+                                    </Pressable>
+                                )
+                            )}
                         </View>
                     </View>
 
                     {/* ================================================= */}
-                    {/* PRODUCT INFORMATION                              */}
+                    {/*                PRODUCT INFORMATION                */}
                     {/* ================================================= */}
 
                     <View
                         style={[
                             styles.informationProduct,
                             isMobile &&
-                            styles.informationProductMobile,
+                                styles.informationProductMobile,
                         ]}
                     >
 
-                        {/* ============================== */}
-                        {/* TÊN SẢN PHẨM */}
-                        {/* ============================== */}
+                        {/* TÊN */}
 
                         <Text
                             style={[
                                 styles.productName,
                                 isMobile &&
-                                styles.productNameMobile,
+                                    styles.productNameMobile,
                             ]}
                         >
                             iPhone 16e 128GB
                         </Text>
 
-                        {/* ============================== */}
                         {/* GIÁ */}
-                        {/* ============================== */}
 
                         <Text
                             style={[
                                 styles.productPrice,
                                 isMobile &&
-                                styles.productPriceMobile,
+                                    styles.productPriceMobile,
                             ]}
                         >
                             16.990.000 ₫
                         </Text>
 
-                        {/* ============================== */}
                         {/* THÔNG TIN */}
-                        {/* ============================== */}
 
                         <View
                             style={[
                                 styles.infoProduct,
                                 isMobile &&
-                                styles.infoProductMobile,
+                                    styles.infoProductMobile,
                             ]}
                         >
                             <Text
                                 style={[
                                     styles.infoText,
                                     isMobile &&
-                                    styles.infoTextMobile,
+                                        styles.infoTextMobile,
                                 ]}
                             >
                                 Màn hình 6.1"
@@ -415,7 +443,7 @@ export default function ProductDetail() {
                                 style={[
                                     styles.infoText,
                                     isMobile &&
-                                    styles.infoTextMobile,
+                                        styles.infoTextMobile,
                                 ]}
                             >
                                 Chip A18
@@ -425,7 +453,7 @@ export default function ProductDetail() {
                                 style={[
                                     styles.infoText,
                                     isMobile &&
-                                    styles.infoTextMobile,
+                                        styles.infoTextMobile,
                                 ]}
                             >
                                 Camera 48MP
@@ -435,7 +463,7 @@ export default function ProductDetail() {
                                 style={[
                                     styles.infoText,
                                     isMobile &&
-                                    styles.infoTextMobile,
+                                        styles.infoTextMobile,
                                 ]}
                             >
                                 Pin 4820 mAh
@@ -443,40 +471,45 @@ export default function ProductDetail() {
                         </View>
 
                         {/* ================================================= */}
-                        {/* CHỌN MÀU                                          */}
+                        {/*                     CHỌN MÀU                     */}
                         {/* ================================================= */}
 
                         <View
                             style={[
                                 styles.colorContainer,
                                 isMobile &&
-                                styles.colorContainerMobile,
+                                    styles.colorContainerMobile,
                             ]}
                         >
                             {colors.map((item) => (
                                 <Pressable
                                     key={item.id}
                                     onPress={() =>
-                                        setSelectedColor(item.id)
+                                        setSelectedColor(
+                                            item.id
+                                        )
                                     }
                                     style={[
                                         styles.colorItem,
                                         isMobile &&
-                                        styles.colorItemMobile,
-                                        selectedColor === item.id &&
-                                        styles.colorItemActive,
+                                            styles.colorItemMobile,
+                                        selectedColor ===
+                                            item.id &&
+                                            styles.colorItemActive,
                                     ]}
                                 >
                                     <View
                                         style={[
                                             styles.colorCircle,
                                             isMobile &&
-                                            styles.colorCircleMobile,
+                                                styles.colorCircleMobile,
                                             {
-                                                backgroundColor: item.color,
+                                                backgroundColor:
+                                                    item.color,
                                             },
-                                            selectedColor === item.id &&
-                                            styles.colorCircleActive,
+                                            selectedColor ===
+                                                item.id &&
+                                                styles.colorCircleActive,
                                         ]}
                                     />
 
@@ -484,7 +517,7 @@ export default function ProductDetail() {
                                         style={[
                                             styles.colorText,
                                             isMobile &&
-                                            styles.colorTextMobile,
+                                                styles.colorTextMobile,
                                         ]}
                                     >
                                         {item.name}
@@ -494,37 +527,41 @@ export default function ProductDetail() {
                         </View>
 
                         {/* ================================================= */}
-                        {/* CHỌN DUNG LƯỢNG                                  */}
+                        {/*                  CHỌN DUNG LƯỢNG                */}
                         {/* ================================================= */}
 
                         <View
                             style={[
                                 styles.capacityContainer,
                                 isMobile &&
-                                styles.capacityContainerMobile,
+                                    styles.capacityContainerMobile,
                             ]}
                         >
                             {capacities.map((item) => (
                                 <Pressable
                                     key={item.id}
                                     onPress={() =>
-                                        setSelectedCapacity(item.id)
+                                        setSelectedCapacity(
+                                            item.id
+                                        )
                                     }
                                     style={[
                                         styles.capacityItem,
                                         isMobile &&
-                                        styles.capacityItemMobile,
-                                        selectedCapacity === item.id &&
-                                        styles.capacityItemActive,
+                                            styles.capacityItemMobile,
+                                        selectedCapacity ===
+                                            item.id &&
+                                            styles.capacityItemActive,
                                     ]}
                                 >
                                     <Text
                                         style={[
                                             styles.capacityText,
                                             isMobile &&
-                                            styles.capacityTextMobile,
-                                            selectedCapacity === item.id &&
-                                            styles.capacityTextActive,
+                                                styles.capacityTextMobile,
+                                            selectedCapacity ===
+                                                item.id &&
+                                                styles.capacityTextActive,
                                         ]}
                                     >
                                         {item.name}
@@ -534,35 +571,41 @@ export default function ProductDetail() {
                         </View>
 
                         {/* ================================================= */}
-                        {/* BUTTON MUA HÀNG                                  */}
+                        {/*                    BUTTONS                       */}
                         {/* ================================================= */}
 
                         <View
                             style={[
                                 styles.buyContainer,
                                 isMobile &&
-                                styles.buyContainerMobile,
+                                    styles.buyContainerMobile,
                             ]}
                         >
-
                             {/* MUA NGAY */}
+
                             <Pressable
-                                onPress={() => {
-                                    console.log("Mua ngay");
-                                }}
-                                style={({ pressed }: { pressed: boolean }) => [
+                                onPress={() =>
+                                    console.log(
+                                        "Mua ngay"
+                                    )
+                                }
+                                style={({
+                                    pressed,
+                                }: {
+                                    pressed: boolean;
+                                }) => [
                                     styles.buyButton,
                                     isMobile &&
-                                    styles.buyButtonMobile,
+                                        styles.buyButtonMobile,
                                     pressed &&
-                                    styles.actionButtonPressed,
+                                        styles.actionButtonPressed,
                                 ]}
                             >
                                 <Text
                                     style={[
                                         styles.buttonText,
                                         isMobile &&
-                                        styles.buttonTextMobile,
+                                            styles.buttonTextMobile,
                                     ]}
                                 >
                                     MUA NGAY
@@ -570,23 +613,30 @@ export default function ProductDetail() {
                             </Pressable>
 
                             {/* THÊM VÀO GIỎ */}
+
                             <Pressable
-                                onPress={() => {
-                                    console.log("Thêm vào giỏ");
-                                }}
-                                style={({ pressed }: { pressed: boolean }) => [
+                                onPress={() =>
+                                    console.log(
+                                        "Thêm vào giỏ"
+                                    )
+                                }
+                                style={({
+                                    pressed,
+                                }: {
+                                    pressed: boolean;
+                                }) => [
                                     styles.cartButton,
                                     isMobile &&
-                                    styles.cartButtonMobile,
+                                        styles.cartButtonMobile,
                                     pressed &&
-                                    styles.actionButtonPressed,
+                                        styles.actionButtonPressed,
                                 ]}
                             >
                                 <Text
                                     style={[
                                         styles.buttonText,
                                         isMobile &&
-                                        styles.buttonTextMobile,
+                                            styles.buttonTextMobile,
                                     ]}
                                 >
                                     🛒 THÊM VÀO GIỎ
@@ -594,29 +644,35 @@ export default function ProductDetail() {
                             </Pressable>
 
                             {/* YÊU THÍCH */}
+
                             <Pressable
-                                onPress={() => {
-                                    console.log("Yêu thích");
-                                }}
-                                style={({ pressed }: { pressed: boolean }) => [
+                                onPress={() =>
+                                    console.log(
+                                        "Yêu thích"
+                                    )
+                                }
+                                style={({
+                                    pressed,
+                                }: {
+                                    pressed: boolean;
+                                }) => [
                                     styles.favoriteButton,
                                     isMobile &&
-                                    styles.favoriteButtonMobile,
+                                        styles.favoriteButtonMobile,
                                     pressed &&
-                                    styles.actionButtonPressed,
+                                        styles.actionButtonPressed,
                                 ]}
                             >
                                 <Text
                                     style={[
                                         styles.favoriteText,
                                         isMobile &&
-                                        styles.favoriteTextMobile,
+                                            styles.favoriteTextMobile,
                                     ]}
                                 >
                                     ♡
                                 </Text>
                             </Pressable>
-
                         </View>
                     </View>
                 </View>
@@ -625,38 +681,27 @@ export default function ProductDetail() {
     );
 }
 
-// =====================================================
-// STYLE
-// =====================================================
+/* ================================================= */
+/*                     STYLES                        */
+/* ================================================= */
 
 const styles = StyleSheet.create({
 
-    // =====================================================
-    // CONTAINER
-    // =====================================================
+    /* ================================================= */
+    /*                    CONTAINER                      */
+    /* ================================================= */
 
     container: {
         flex: 1,
-
         backgroundColor: "#FFFFFF",
-
-        /*
-         * Quan trọng:
-         * Không cho toàn bộ trang cuộn.
-         * Chỉ ScrollView bên dưới được phép cuộn.
-         */
         overflow: "hidden",
     },
 
-    // =====================================================
-    // CONTENT SCROLL
-    // =====================================================
+    /* ================================================= */
+    /*                  CONTENT SCROLL                   */
+    /* ================================================= */
 
     contentScroll: {
-        /*
-         * ScrollView chiếm toàn bộ phần còn lại
-         * bên dưới header.
-         */
         flex: 1,
     },
 
@@ -668,45 +713,33 @@ const styles = StyleSheet.create({
         paddingBottom: 25,
     },
 
-    // =====================================================
-    // HEADER DESKTOP
-    // =====================================================
+    /* ================================================= */
+    /*                    HEADER                         */
+    /* ================================================= */
 
     header: {
-        minHeight: 100,
-
         backgroundColor: "red",
+
+        paddingHorizontal: 25,
+        paddingTop: 45,
+        paddingBottom: 18,
 
         flexDirection: "row",
 
         alignItems: "center",
 
-        justifyContent: "space-between",
+        gap: 25,
 
-        paddingHorizontal: 20,
-
-        paddingVertical: 10,
-
-        /*
-         * Giữ header nằm trên nội dung.
-         */
         zIndex: 1000,
-
         elevation: 10,
     },
 
-    // =====================================================
-    // HEADER MOBILE
-    // =====================================================
-
     headerMobile: {
-        minHeight: 0,
+        backgroundColor: "red",
 
-        paddingHorizontal: 12,
-
-        paddingTop: 25,
-
-        paddingBottom: 12,
+        paddingHorizontal: 15,
+        paddingTop: 30,
+        paddingBottom: 15,
 
         flexDirection: "column",
 
@@ -714,104 +747,93 @@ const styles = StyleSheet.create({
 
         justifyContent: "center",
 
-        zIndex: 1000,
+        gap: 0,
 
+        zIndex: 1000,
         elevation: 10,
     },
 
-    // =====================================================
-    // LOGO
-    // =====================================================
+    /* ================================================= */
+    /*                      LOGO                         */
+    /* ================================================= */
 
     logo: {
         flexDirection: "row",
 
         alignItems: "center",
-
-        gap: 20,
-
-        margin: 10,
     },
 
     logoMobile: {
         justifyContent: "center",
-
-        gap: 8,
-
-        margin: 0,
     },
 
     logoImage: {
-        width: 80,
+        width: 65,
+        height: 65,
 
-        height: 80,
-
-        borderRadius: 5,
+        borderRadius: 8,
     },
 
     logoImageMobile: {
         width: 48,
-
         height: 48,
 
-        borderRadius: 6,
+        borderRadius: 7,
     },
 
     logoText: {
-        color: "white",
+        fontSize: 27,
 
-        fontSize: 30,
+        fontWeight: "700",
 
-        fontFamily: "Times New Roman",
+        marginLeft: 12,
 
-        fontWeight: "bold",
+        color: "#ffffff",
     },
 
     logoTextMobile: {
         fontSize: 22,
 
-        fontFamily: "Times New Roman",
+        marginLeft: 9,
 
-        fontWeight: "bold",
+        color: "#ffffff",
     },
 
-    // =====================================================
-    // SEARCH BAR
-    // =====================================================
+    /* ================================================= */
+    /*                    SEARCH BAR                     */
+    /* ================================================= */
 
     searchBar: {
+        flex: 1,
+
+        height: 48,
+
         flexDirection: "row",
 
         alignItems: "center",
 
-        backgroundColor: "white",
+        backgroundColor: "#ffffff",
 
-        width: 750,
+        borderRadius: 30,
 
-        height: 45,
+        overflow: "hidden",
 
-        borderRadius: 60,
-
-        paddingLeft: 15,
-
-        paddingRight: 5,
+        paddingLeft: 5,
     },
 
     searchBarMobile: {
         width: "100%",
 
-        height: 42,
+        height: 44,
 
-        marginTop: 12,
+        marginTop: 15,
 
-        paddingLeft: 10,
-
-        paddingRight: 4,
+        paddingLeft: 5,
     },
 
-    // =====================================================
-    // SEARCH INPUT
-    // =====================================================
+    /* ================================================= */
+    /*                   SEARCH INPUT                    */
+    /* ================================================= */
 
     searchInput: {
         flex: 1,
@@ -822,87 +844,79 @@ const styles = StyleSheet.create({
 
         fontSize: 14,
 
-        color: "#000000",
+        color: "#333",
 
         outlineStyle: "none" as any,
     },
 
     searchInputMobile: {
-        fontSize: 13,
+        paddingHorizontal: 12,
 
-        paddingHorizontal: 10,
+        fontSize: 13,
     },
 
-    // =====================================================
-    // SEARCH BUTTON
-    // =====================================================
+    /* ================================================= */
+    /*                  SEARCH BUTTON                   */
+    /* ================================================= */
 
     searchButton: {
+        width: 42,
+
+        height: 42,
+
+        marginRight: 3,
+
+        borderRadius: 21,
+
+        backgroundColor: "red",
+
+        justifyContent: "center",
+
+        alignItems: "center",
+    },
+
+    searchButtonMobile: {
         width: 38,
 
         height: 38,
 
-        borderRadius: 50,
-
-        backgroundColor: "red",
-
-        alignItems: "center",
-
-        justifyContent: "center",
-
-        padding: 0,
+        borderRadius: 20,
     },
 
-    searchButtonMobile: {
-        width: 35,
-
-        height: 35,
-
-        borderRadius: 18,
-    },
-
-    searchButtonPressed: {
-        transform: [{ scale: 0.95 }],
-    },
-
-    // =====================================================
-    // CUSTOMER ICONS
-    // =====================================================
+    /* ================================================= */
+    /*                 CUSTOMER ICONS                    */
+    /* ================================================= */
 
     customerIcons: {
         flexDirection: "row",
 
         alignItems: "center",
 
-        gap: 50,
+        gap: 25,
     },
 
     customerIconsMobile: {
-        width: "100%",
+        flexDirection: "row",
 
         justifyContent: "space-around",
 
+        width: "100%",
+
+        marginTop: 15,
+
         gap: 0,
-
-        marginTop: 10,
-
-        order: 2,
     },
 
-    // =====================================================
-    // HEADER BUTTON CONTAINER
-    // =====================================================
+    /* ================================================= */
+    /*                HEADER BUTTON                      */
+    /* ================================================= */
 
     headerButtonContainer: {
-        flexDirection: "column",
-
         alignItems: "center",
-
-        gap: 0,
     },
 
     headerButtonContainerMobile: {
-        minWidth: 70,
+        alignItems: "center",
     },
 
     headerButtonContainerHover: {
@@ -913,14 +927,9 @@ const styles = StyleSheet.create({
         ],
     },
 
-
-
-    // =====================================================
-    // HEADER BUTTON
-    // =====================================================
-
     headerButton: {
         width: 50,
+
         height: 40,
 
         borderRadius: 25,
@@ -928,11 +937,13 @@ const styles = StyleSheet.create({
         backgroundColor: "transparent",
 
         justifyContent: "center",
+
         alignItems: "center",
     },
 
     headerButtonMobile: {
         width: 42,
+
         height: 36,
 
         borderRadius: 20,
@@ -940,6 +951,7 @@ const styles = StyleSheet.create({
         backgroundColor: "transparent",
 
         justifyContent: "center",
+
         alignItems: "center",
     },
 
@@ -960,33 +972,52 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
 
-    headerButtonPressed: {
-        backgroundColor: "white",
-
-        transform: [{ scale: 1.05 }],
-    },
-
-    // =====================================================
-    // HEADER BUTTON TEXT
-    // =====================================================
-
     headerButtonText: {
-        color: "white",
+        fontSize: 12,
 
         marginTop: 3,
 
-        fontSize: 14,
+        color: "#ffffff",
+
+        fontWeight: "500",
     },
 
     headerButtonTextMobile: {
         fontSize: 10,
 
         marginTop: 2,
+
+        color: "#ffffff",
     },
 
-    // =====================================================
-    // PRODUCT DETAIL
-    // =====================================================
+    /* ================================================= */
+    /*                 COMMON HOVER                     */
+    /* ================================================= */
+
+    buttonHover: {
+        transform: [
+            {
+                scale: 1.05,
+            },
+        ],
+
+        shadowColor: "#000",
+
+        shadowOffset: {
+            width: 0,
+            height: 5,
+        },
+
+        shadowOpacity: 0.2,
+
+        shadowRadius: 7,
+
+        elevation: 5,
+    },
+
+    /* ================================================= */
+    /*                 PRODUCT DETAIL                   */
+    /* ================================================= */
 
     productDetail: {
         flexDirection: "row",
@@ -1040,9 +1071,9 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
 
-    // =====================================================
-    // PRODUCT IMAGES
-    // =====================================================
+    /* ================================================= */
+    /*                 PRODUCT IMAGES                    */
+    /* ================================================= */
 
     productImages: {
         width: 550,
@@ -1054,9 +1085,9 @@ const styles = StyleSheet.create({
         width: "100%",
     },
 
-    // =====================================================
-    // MAIN IMAGE
-    // =====================================================
+    /* ================================================= */
+    /*                    MAIN IMAGE                     */
+    /* ================================================= */
 
     mainImage: {
         position: "relative",
@@ -1086,10 +1117,6 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
 
-    // =====================================================
-    // MAIN PRODUCT IMAGE
-    // =====================================================
-
     mainProductImage: {
         width: "80%",
 
@@ -1104,9 +1131,9 @@ const styles = StyleSheet.create({
         height: "85%",
     },
 
-    // =====================================================
-    // THUMBNAIL LIST
-    // =====================================================
+    /* ================================================= */
+    /*                 THUMBNAILS                        */
+    /* ================================================= */
 
     thumbnailList: {
         flexDirection: "row",
@@ -1125,10 +1152,6 @@ const styles = StyleSheet.create({
 
         justifyContent: "center",
     },
-
-    // =====================================================
-    // THUMBNAIL
-    // =====================================================
 
     thumbnail: {
         width: 90,
@@ -1158,19 +1181,11 @@ const styles = StyleSheet.create({
         borderRadius: 8,
     },
 
-    // =====================================================
-    // THUMBNAIL ACTIVE
-    // =====================================================
-
     thumbnailActive: {
         borderWidth: 2,
 
         borderColor: "red",
     },
-
-    // =====================================================
-    // THUMBNAIL IMAGE
-    // =====================================================
 
     thumbnailImage: {
         width: "100%",
@@ -1180,9 +1195,9 @@ const styles = StyleSheet.create({
         resizeMode: "contain",
     },
 
-    // =====================================================
-    // INFORMATION PRODUCT
-    // =====================================================
+    /* ================================================= */
+    /*              INFORMATION PRODUCT                  */
+    /* ================================================= */
 
     informationProduct: {
         width: 550,
@@ -1197,10 +1212,6 @@ const styles = StyleSheet.create({
 
         padding: 10,
     },
-
-    // =====================================================
-    // PRODUCT NAME
-    // =====================================================
 
     productName: {
         fontSize: 42,
@@ -1217,10 +1228,6 @@ const styles = StyleSheet.create({
 
         lineHeight: 34,
     },
-
-    // =====================================================
-    // PRODUCT PRICE
-    // =====================================================
 
     productPrice: {
         fontSize: 45,
@@ -1242,9 +1249,9 @@ const styles = StyleSheet.create({
         marginBottom: 15,
     },
 
-    // =====================================================
-    // INFORMATION
-    // =====================================================
+    /* ================================================= */
+    /*                   INFORMATION                     */
+    /* ================================================= */
 
     infoProduct: {
         gap: 10,
@@ -1264,9 +1271,9 @@ const styles = StyleSheet.create({
         fontSize: 15,
     },
 
-    // =====================================================
-    // COLOR CONTAINER
-    // =====================================================
+    /* ================================================= */
+    /*                    COLOR                          */
+    /* ================================================= */
 
     colorContainer: {
         flexDirection: "row",
@@ -1283,10 +1290,6 @@ const styles = StyleSheet.create({
 
         marginTop: 18,
     },
-
-    // =====================================================
-    // COLOR ITEM
-    // =====================================================
 
     colorItem: {
         flexDirection: "row",
@@ -1320,19 +1323,11 @@ const styles = StyleSheet.create({
         borderRadius: 8,
     },
 
-    // =====================================================
-    // COLOR ACTIVE
-    // =====================================================
-
     colorItemActive: {
         borderWidth: 2,
 
         borderColor: "red",
     },
-
-    // =====================================================
-    // COLOR CIRCLE
-    // =====================================================
 
     colorCircle: {
         width: 18,
@@ -1354,10 +1349,6 @@ const styles = StyleSheet.create({
         borderRadius: 8,
     },
 
-    // =====================================================
-    // COLOR CIRCLE ACTIVE
-    // =====================================================
-
     colorCircleActive: {
         borderWidth: 3,
 
@@ -1378,10 +1369,6 @@ const styles = StyleSheet.create({
         elevation: 2,
     },
 
-    // =====================================================
-    // COLOR TEXT
-    // =====================================================
-
     colorText: {
         fontSize: 15,
 
@@ -1392,9 +1379,9 @@ const styles = StyleSheet.create({
         fontSize: 13,
     },
 
-    // =====================================================
-    // CAPACITY
-    // =====================================================
+    /* ================================================= */
+    /*                  CAPACITY                         */
+    /* ================================================= */
 
     capacityContainer: {
         flexDirection: "row",
@@ -1413,10 +1400,6 @@ const styles = StyleSheet.create({
 
         marginTop: 12,
     },
-
-    // =====================================================
-    // CAPACITY ITEM
-    // =====================================================
 
     capacityItem: {
         width: 90,
@@ -1444,17 +1427,9 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
 
-    // =====================================================
-    // CAPACITY ACTIVE
-    // =====================================================
-
     capacityItemActive: {
         borderColor: "red",
     },
-
-    // =====================================================
-    // CAPACITY TEXT
-    // =====================================================
 
     capacityText: {
         fontSize: 15,
@@ -1472,9 +1447,9 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
     },
 
-    // =====================================================
-    // BUY CONTAINER
-    // =====================================================
+    /* ================================================= */
+    /*                 BUY CONTAINER                     */
+    /* ================================================= */
 
     buyContainer: {
         flexDirection: "row",
@@ -1497,10 +1472,6 @@ const styles = StyleSheet.create({
 
         marginTop: 18,
     },
-
-    // =====================================================
-    // BUY BUTTON
-    // =====================================================
 
     buyButton: {
         width: 250,
@@ -1526,10 +1497,6 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
 
-    // =====================================================
-    // CART BUTTON
-    // =====================================================
-
     cartButton: {
         width: 250,
 
@@ -1554,10 +1521,6 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
 
-    // =====================================================
-    // FAVORITE BUTTON
-    // =====================================================
-
     favoriteButton: {
         width: 60,
 
@@ -1580,9 +1543,9 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
 
-    // =====================================================
-    // BUTTON TEXT
-    // =====================================================
+    /* ================================================= */
+    /*                 BUTTON TEXT                       */
+    /* ================================================= */
 
     buttonText: {
         color: "white",
@@ -1598,10 +1561,6 @@ const styles = StyleSheet.create({
         fontSize: 13,
     },
 
-    // =====================================================
-    // FAVORITE TEXT
-    // =====================================================
-
     favoriteText: {
         color: "white",
 
@@ -1614,9 +1573,9 @@ const styles = StyleSheet.create({
         fontSize: 26,
     },
 
-    // =====================================================
-    // PRESS EFFECT
-    // =====================================================
+    /* ================================================= */
+    /*                 PRESS EFFECT                      */
+    /* ================================================= */
 
     actionButtonPressed: {
         transform: [{ scale: 0.95 }],
