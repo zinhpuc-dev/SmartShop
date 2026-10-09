@@ -85,6 +85,7 @@ function PhoneLayout() {
           <HoverButton
             style={styles.phoneIconItem}
             hoverStyle={styles.iconItemHover}
+            onPress={() => router.push("/cart")}
           >
             {(hovered: boolean) => (
               <>
@@ -112,6 +113,7 @@ function PhoneLayout() {
           <HoverButton
             style={styles.phoneIconItem}
             hoverStyle={styles.iconItemHover}
+            onPress={() => router.push("/orders")}
           >
             {(hovered: boolean) => (
               <>
@@ -456,6 +458,7 @@ function DesktopLayout() {
           <HoverButton
             style={styles.iconItem}
             hoverStyle={styles.iconItemHover}
+            onPress={() => router.push("/cart")}
           >
             {(hovered: boolean) => (
               <>
@@ -487,6 +490,7 @@ function DesktopLayout() {
           <HoverButton
             style={styles.iconItem}
             hoverStyle={styles.iconItemHover}
+            onPress={() => router.push("/orders")}
           >
             {(hovered: boolean) => (
               <>
