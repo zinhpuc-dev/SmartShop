@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Image,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -10,6 +11,9 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 
+/* ================================================= */
+/*                  HOVER BUTTON                     */
+/* ================================================= */
 function HoverButton({ children, style, hoverStyle, ...props }: any) {
   const [hovered, setHovered] = React.useState(false);
   return (
@@ -24,6 +28,9 @@ function HoverButton({ children, style, hoverStyle, ...props }: any) {
   );
 }
 
+/* ================================================= */
+/*                  KIỂU DỮ LIỆU                    */
+/* ================================================= */
 type CartProduct = {
   id: string;
   name: string;
@@ -34,6 +41,9 @@ type CartProduct = {
   icon: keyof typeof Ionicons.glyphMap;
 };
 
+/* ================================================= */
+/*              DỮ LIỆU GIỎ HÀNG MẪU                */
+/* ================================================= */
 const initialProducts: CartProduct[] = [
   { id: "SP001", name: "iPhone 16e 128GB", variant: "Màu đen · Chính hãng VN/A", price: 16990000, originalPrice: 17990000, quantity: 1, icon: "phone-portrait-outline" },
   { id: "SP002", name: "Tai nghe Bluetooth", variant: "Màu trắng · Bảo hành 12 tháng", price: 790000, originalPrice: 990000, quantity: 2, icon: "headset-outline" },
@@ -42,6 +52,9 @@ const initialProducts: CartProduct[] = [
 
 const formatPrice = (price: number) => `${price.toLocaleString("vi-VN")}đ`;
 
+/* ================================================= */
+/*                  MÀN HÌNH GIỎ HÀNG               */
+/* ================================================= */
 export default function CartScreen() {
   const { width } = useWindowDimensions();
   const isMobile = width < 600;
@@ -71,32 +84,43 @@ export default function CartScreen() {
 
   return (
     <View style={styles.container}>
+      {/* ================================================= */}
+      {/*                       HEADER                      */}
+      {/* ================================================= */}
       <View style={isMobile ? styles.phoneHeader : styles.header}>
-        <HoverButton style={styles.brandRow} onPress={() => router.push("/")}>
-          <View style={styles.logoMark}><Ionicons name="bag-handle" size={isMobile ? 23 : 27} color="#ffffff" /></View>
-          <View>
+        {/* Logo ảnh và tên cửa hàng giống trang chủ */}
+        <HoverButton style={styles.brandRow} onPress={() => router.push("/") }>
+          <Image
+            source={require("../../../image/logo.jpg")}
+            style={isMobile ? styles.phoneLogoImage : styles.logoImage}
+            resizeMode="cover"
+          />
+          <View style={styles.brandCopy}>
             <Text style={styles.logoText}>BVP Shop</Text>
             {!isMobile && <Text style={styles.headerSubtitle}>Mua sắm dễ dàng · Giao hàng tận nơi</Text>}
           </View>
         </HoverButton>
-        {!isMobile && (
-          <View style={styles.headerActions}>
-            <View style={[styles.headerAction, styles.headerActionCurrent]}>
-              <Ionicons name="cart" size={23} color="#ffffff" />
-              <Text style={styles.headerActionText}>Giỏ hàng</Text>
-            </View>
+
+        {/* Không hiển thị nút về trang chủ; bấm logo hoặc tên shop để về trang chủ */}
+        <View style={styles.headerActions}>
+          {!isMobile && (
             <HoverButton style={styles.headerAction} hoverStyle={styles.headerActionHover} onPress={() => router.push("/orders")}>
               <Ionicons name="receipt-outline" size={23} color="#ffffff" />
               <Text style={styles.headerActionText}>Đơn hàng</Text>
             </HoverButton>
+          )}
+          {!isMobile && (
             <HoverButton style={styles.headerAction} hoverStyle={styles.headerActionHover}>
               <Ionicons name="person-outline" size={23} color="#ffffff" />
               <Text style={styles.headerActionText}>Tài khoản</Text>
             </HoverButton>
-          </View>
-        )}
+          )}
+        </View>
       </View>
 
+      {/* ================================================= */}
+      {/*                  NỘI DUNG GIỎ HÀNG               */}
+      {/* ================================================= */}
       <ScrollView style={styles.contentScroll} contentContainerStyle={isMobile ? styles.phoneContent : styles.desktopContent} showsVerticalScrollIndicator={false}>
         <View style={styles.pageHeading}>
           <View style={styles.headingIcon}><Ionicons name="cart-outline" size={25} color="red" /></View>
@@ -188,6 +212,7 @@ export default function CartScreen() {
         <Text style={styles.footerNote}>BVP Shop · Cảm ơn bạn đã mua sắm cùng chúng tôi!</Text>
       </ScrollView>
 
+      {/* Thông báo thao tác */}
       {!!notice && (
         <View style={styles.toast}>
           <Ionicons name="checkmark-circle" size={19} color="#16834a" />
@@ -196,6 +221,7 @@ export default function CartScreen() {
         </View>
       )}
 
+      {/* Hộp thoại xác nhận xóa sản phẩm */}
       {!!pendingDelete && (
         <View style={styles.modalBackdrop}>
           <Pressable style={styles.modalBackdropTouch} onPress={() => setPendingDelete(null)} />
@@ -211,6 +237,7 @@ export default function CartScreen() {
         </View>
       )}
 
+      {/* Hộp thoại xác nhận bước đặt hàng mẫu */}
       {showCheckoutModal && (
         <View style={styles.modalBackdrop}>
           <Pressable style={styles.modalBackdropTouch} onPress={() => setShowCheckoutModal(false)} />
@@ -229,16 +256,22 @@ export default function CartScreen() {
   );
 }
 
+/* ================================================= */
+/*                      STYLES                       */
+/* ================================================= */
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#f5f5f5" },
   contentScroll: { flex: 1 },
   header: { backgroundColor: "red", paddingHorizontal: 28, paddingTop: 35, paddingBottom: 18, flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 20 },
-  phoneHeader: { backgroundColor: "red", paddingHorizontal: 15, paddingTop: 28, paddingBottom: 16, flexDirection: "row", alignItems: "center", justifyContent: "space-between" },
-  brandRow: { flexDirection: "row", alignItems: "center", gap: 12 },
-  logoMark: { width: 48, height: 48, borderRadius: 10, backgroundColor: "rgba(255,255,255,0.18)", justifyContent: "center", alignItems: "center", borderWidth: 1, borderColor: "rgba(255,255,255,0.4)" },
+  phoneHeader: { backgroundColor: "red", paddingHorizontal: 12, paddingTop: 28, paddingBottom: 16, flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 8 },
+  brandRow: { flexDirection: "row", alignItems: "center", gap: 10, flexShrink: 1 },
+  logoImage: { width: 65, height: 65, borderRadius: 8 },
+  phoneLogoImage: { width: 48, height: 48, borderRadius: 7 },
+  brandCopy: { flexShrink: 1 },
   logoText: { color: "#ffffff", fontSize: 24, fontWeight: "800" },
   headerSubtitle: { color: "#ffe5e5", fontSize: 12, marginTop: 3 },
   headerActions: { flexDirection: "row", alignItems: "center", gap: 20 },
+  homeIconButton: { alignItems: "center", paddingHorizontal: 8, paddingVertical: 4, borderRadius: 10 },
   headerAction: { alignItems: "center", paddingHorizontal: 8, paddingVertical: 4, borderRadius: 10 },
   headerActionCurrent: { backgroundColor: "rgba(255,255,255,0.17)" },
   headerActionHover: { backgroundColor: "rgba(255,255,255,0.16)", transform: [{ scale: 1.04 }] },

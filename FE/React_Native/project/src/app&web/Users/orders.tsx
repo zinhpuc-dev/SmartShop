@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Image,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -9,6 +10,11 @@ import {
   useWindowDimensions,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
+
+/* ================================================= */
+/*                 HOVER BUTTON                      */
+/* ================================================= */
 
 function HoverButton({ children, style, hoverStyle, ...props }: any) {
   const [hovered, setHovered] = React.useState(false);
@@ -23,6 +29,10 @@ function HoverButton({ children, style, hoverStyle, ...props }: any) {
     </Pressable>
   );
 }
+
+/* ================================================= */
+/*                 DỮ LIỆU ĐƠN HÀNG                 */
+/* ================================================= */
 
 type OrderStatus = "Tất cả" | "Chờ xác nhận" | "Đang giao" | "Hoàn thành" | "Đã hủy";
 type Order = {
@@ -42,7 +52,12 @@ const orders: Order[] = [
 
 const tabs: OrderStatus[] = ["Tất cả", "Chờ xác nhận", "Đang giao", "Hoàn thành", "Đã hủy"];
 
+/* ================================================= */
+/*                 MÀN HÌNH ĐƠN HÀNG                */
+/* ================================================= */
+
 export default function OrdersScreen() {
+  const router = useRouter();
   const { width } = useWindowDimensions();
   const isMobile = width < 600;
   const [activeTab, setActiveTab] = React.useState<OrderStatus>("Tất cả");
@@ -57,27 +72,43 @@ export default function OrdersScreen() {
 
   return (
     <View style={styles.container}>
+      {/* ================================================= */}
+      {/*                     HEADER                        */}
+      {/* ================================================= */}
       <View style={isMobile ? styles.phoneHeader : styles.header}>
-        <View style={styles.brandRow}>
-          <View style={styles.logoMark}><Ionicons name="bag-handle" size={isMobile ? 23 : 27} color="#ffffff" /></View>
+        {/* Logo giống trang chủ */}
+        <HoverButton style={styles.brandRow} onPress={() => router.push("/")}>
+          <Image
+            source={require("../../../image/logo.jpg")}
+            style={isMobile ? styles.phoneLogoImage : styles.logoImage}
+            resizeMode="cover"
+          />
           <View>
             <Text style={styles.logoText}>BVP Shop</Text>
             {!isMobile && <Text style={styles.headerSubtitle}>Mua sắm dễ dàng · Giao hàng tận nơi</Text>}
           </View>
+        </HoverButton>
+
+        {/* Điều hướng: không hiển thị mục Đơn hàng trên chính trang đơn hàng */}
+        <View style={styles.headerActions}>
+          {!isMobile && (
+            <>
+              <HoverButton style={styles.headerAction} hoverStyle={styles.headerActionHover} onPress={() => router.push("/cart")}>
+                <Ionicons name="cart-outline" size={23} color="#ffffff" />
+                <Text style={styles.headerActionText}>Giỏ hàng</Text>
+              </HoverButton>
+              <HoverButton style={styles.headerAction} hoverStyle={styles.headerActionHover}>
+                <Ionicons name="person-outline" size={23} color="#ffffff" />
+                <Text style={styles.headerActionText}>Tài khoản</Text>
+              </HoverButton>
+            </>
+          )}
         </View>
-        {!isMobile && (
-          <View style={styles.headerActions}>
-            <HoverButton style={styles.headerAction} hoverStyle={styles.headerActionHover}>
-              <Ionicons name="cart-outline" size={23} color="#ffffff" />
-              <Text style={styles.headerActionText}>Giỏ hàng</Text>
-            </HoverButton>
-            <HoverButton style={styles.headerAction} hoverStyle={styles.headerActionHover}>
-              <Ionicons name="person-outline" size={23} color="#ffffff" />
-              <Text style={styles.headerActionText}>Tài khoản</Text>
-            </HoverButton>
-          </View>
-        )}
       </View>
+
+      {/* ================================================= */}
+      {/*                 NỘI DUNG ĐƠN HÀNG                */}
+      {/* ================================================= */}
 
       <ScrollView style={styles.contentScroll} contentContainerStyle={isMobile ? styles.phoneContent : styles.desktopContent} showsVerticalScrollIndicator={false}>
         <View style={styles.pageHeading}>
@@ -147,6 +178,10 @@ export default function OrdersScreen() {
   );
 }
 
+/* ================================================= */
+/*                 THẺ THỐNG KÊ                      */
+/* ================================================= */
+
 function SummaryCard({ icon, label, value, isMobile }: { icon: keyof typeof Ionicons.glyphMap; label: string; value: string; isMobile: boolean }) {
   return (
     <View style={[styles.summaryCard, isMobile && styles.phoneSummaryCard]}>
@@ -158,6 +193,10 @@ function SummaryCard({ icon, label, value, isMobile }: { icon: keyof typeof Ioni
     </View>
   );
 }
+
+/* ================================================= */
+/*                 THẺ CHI TIẾT ĐƠN HÀNG             */
+/* ================================================= */
 
 function OrderCard({ order, isMobile }: { order: Order; isMobile: boolean }) {
   const [expanded, setExpanded] = React.useState(false);
@@ -216,13 +255,18 @@ function OrderCard({ order, isMobile }: { order: Order; isMobile: boolean }) {
   );
 }
 
+/* ================================================= */
+/*                     STYLES                        */
+/* ================================================= */
+
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#f5f5f5" },
   contentScroll: { flex: 1 },
   header: { backgroundColor: "red", paddingHorizontal: 28, paddingTop: 35, paddingBottom: 18, flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 20 },
   phoneHeader: { backgroundColor: "red", paddingHorizontal: 15, paddingTop: 28, paddingBottom: 16, flexDirection: "row", alignItems: "center", justifyContent: "space-between" },
   brandRow: { flexDirection: "row", alignItems: "center", gap: 12 },
-  logoMark: { width: 48, height: 48, borderRadius: 10, backgroundColor: "rgba(255,255,255,0.18)", justifyContent: "center", alignItems: "center", borderWidth: 1, borderColor: "rgba(255,255,255,0.4)" },
+  logoImage: { width: 65, height: 65, borderRadius: 8 },
+  phoneLogoImage: { width: 48, height: 48, borderRadius: 7 },
   logoText: { color: "#ffffff", fontSize: 24, fontWeight: "800" },
   headerSubtitle: { color: "#ffe5e5", fontSize: 12, marginTop: 3 },
   headerActions: { flexDirection: "row", alignItems: "center", gap: 20 },

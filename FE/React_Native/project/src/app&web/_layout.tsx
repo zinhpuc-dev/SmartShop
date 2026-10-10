@@ -5,8 +5,6 @@ export default function RootLayout() {
     <ThemeProvider value={DefaultTheme}>
       <Stack>
         <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="login" options={{ headerShown: false }} />
-        <Stack.Screen name="register" options={{ headerShown: false }} />
         <Stack.Screen name="sign_up" options={{ headerShown: false }} />
         <Stack.Screen name="cart" options={{ headerShown: false }} />
         <Stack.Screen name="orders" options={{ headerShown: false }} />
