@@ -58,11 +58,11 @@ export default function ProductDetail() {
     /* ================================================= */
 
     const productImages = [
-        require("../../image/16e1.jpg"),
-        require("../../image/16e2.jpg"),
-        require("../../image/16e3.jpg"),
-        require("../../image/16e4.jpg"),
-        require("../../image/16e5.png"),
+        require("../../../image/16e1.jpg"),
+        require("../../../image/16e2.jpg"),
+        require("../../../image/16e3.jpg"),
+        require("../../../image/16e4.jpg"),
+        require("../../../image/16e5.png"),
     ];
 
     /* ================================================= */
@@ -194,7 +194,7 @@ export default function ProductDetail() {
                     ]}
                 >
                     <Image
-                        source={require("../../image/logo.jpg")}
+                        source={require("../../../image/logo.jpg")}
                         style={[
                             styles.logoImage,
                             isMobile &&

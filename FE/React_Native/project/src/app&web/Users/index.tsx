@@ -71,7 +71,7 @@ function PhoneLayout() {
         {/* logo */}
         <View style={styles.phoneLogo}>
           <Image
-            source={require("../../image/logo.jpg")}
+            source={require("../../../image/logo.jpg")}
             style={styles.phoneLogoImage}
           />
 
@@ -241,7 +241,7 @@ function PhoneLayout() {
           <View style={styles.phoneBannerRight}>
 
             <Image
-              source={require("../../image/Designer.png")}
+              source={require("../../../image/Designer.png")}
               style={styles.phoneBannerImage}
               resizeMode="contain"
             />
@@ -361,7 +361,7 @@ function PhoneLayout() {
             >
 
               <Image
-                source={require("../../image/16e4.jpg")}
+                source={require("../../../image/16e4.jpg")}
                 style={styles.phoneProductImage}
                 resizeMode="contain"
               />
@@ -419,7 +419,7 @@ function DesktopLayout() {
         <View style={styles.logo}>
 
           <Image
-            source={require("../../image/logo.jpg")}
+            source={require("../../../image/logo.jpg")}
             style={styles.logoImage}
           />
 
@@ -604,7 +604,7 @@ function DesktopLayout() {
           <View style={styles.bannerRight}>
 
             <Image
-              source={require("../../image/Designer.png")}
+              source={require("../../../image/Designer.png")}
               style={styles.bannerImage}
               resizeMode="contain"
             />
@@ -724,7 +724,7 @@ function DesktopLayout() {
             >
 
               <Image
-                source={require("../../image/16e4.jpg")}
+                source={require("../../../image/16e4.jpg")}
                 style={styles.productImage}
                 resizeMode="contain"
               />

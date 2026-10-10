@@ -20,7 +20,7 @@ const RegisterScreen = () => {
 
   return (
     <ImageBackground
-      source={require('../../image/anhnen.png')}
+      source={require('../../../image/anhnen.png')}
       style={styles.background}
       resizeMode="cover"
       imageStyle={styles.backgroundImage}
